@@ -1,0 +1,62 @@
+REDES DE COMPUTADORES - Aula 01 - 06/08/2018
+-> Introdução às redes de comunicação
+Intranet -> Interligação de dispositivos de maneira local, sem comunicação externa.
+Protocolo -> Conjunto de regras que permite que determinados dispositivos possam se comunicar.
+São mecanismos que controlam o envio e o recebimento de mensagens.
+Definição formal: Protocolos definem o formato e a ordem das mensagems enviadas e/ou recebidas pelos dipositivos da rede, e que ações serão tomadas aquando da transmissão e/ou recepção de mensagens.
+Borda da rede -> Hosts/Sistemas finais: clientes e servidores, Eles que executam as aplicações e os protocolos de rede
+Redes de acesso, meio físico -> Conexões físicas que permitem a comunicação com a rede, exemplo:
+Fibra, par trançado, wi-fi, satélite, etc.
+Objetivo: Conectar os dispositivos da borda com os do núcleo da rede.
+Núcleo da rede -> Roteadores interconectados;
+Encaminham pacotes entre redes;
+Formam a "rede de redes" (Internet)
+Camadas de Protocolos -> Cada camada implementa um serviço específico;
+Depende dos serviços providos pela camada inferior;
+Por que dividir em camadas?
+Para manter o protocolo se comunicando apenas ao nível da camada com outro protocolo;
+Nas primeiras gerações das redes de computadores, as soluções eram proprietárias;
+Não existia compatibilidade entre sistemas de diferentes fabricantes;
+Facilita a manutenção e atualização do sistema;
+Modelo de referência OSI/ISO -> A ISO desenvolveu um modelo de referência de camadas de protocolos;
+Chamado OSI;
+Define um conjunto de regras como guia para os fabricantes de dispositivos de rede padronizarem os protocolso;
+Visa facilitar a comunicação entre sistemas de diferentes fabricantes sem precisar alterar a lógica do hardware e software;
+o modelo OSI é estruturado em 7 camadas (de maneira hierárquica) com funções específicas;
+É importante ressaltar que: cada camada descreve funcionalidades e não detalhes de implementação;
+Camadas -> 7-Aplicação: Dá suporte às aplicações de rede;
+  Faz a interface entre a pilha de protocolos inferiores e o programa que solicitou ou que receberá os dados através da rede;
+  Contém todos os protocolos de nível mais alto. Ex: FTP, SMTP, HTTP, SSH, etc;
+6-Apresentação: Permite às aplicações interpretar o significado dos dados. Ex: tipo de cifragem, codificação, compressão;
+5-Sessão: Sincronização, verificação, recuperação da troca de dados;
+Permite que dois programas estabeleçam uma sessão de comunicação em rede. Ex: Um cliente e um servidor;
+4-Transporte: Transferência de dados processo a processo;
+Fragmentar segmentos em unidade menores, se necessa´rio;
+Garantir que todos os fragmentos chegarão corretamente à outra extremidade;
+Exemplo: TCP (Faz o controle se a informação chegou ou não), UDP(não quer saber se a informação chegou ou não).
+3-Rede: Endereçamento lógico de dispositivos de rede;
+  Repasse de datagrmas da origem até o destino;
+  Ex: IP, protocolos de roteamento.                        
+2-Enlace: Transferência de dados entre elementos adjacentes;
+Controle de acesso ao meio de transmissão;
+Controle e correção de erros;
+Exemplo: Ethernet, Wi-fi, etc;
+Endereço "físico" ou endereço MAC
+Exemplo: 00:1D:7D:B2:34:F9
+1-Física: Bits "no fio";
+Transforma os bits dos quadros de dados num sinal compatível com o meio físico de transmissão por onde os dados serão enviados;
+Exemplo: Pulsos elétricos, ondas de rádio ou sinais luminosos.
+Encapsulamento -> Cada camada acrescenta um cabeçalho de informação (referente à atual camada) e repassa para a camada imediatamente abaixo;
+Desencapsulamento -> Processo inverso ao encapsulamento;
+Cada camada recebe a mensagem imediatamente abaixo, recupera as informações de cabeçalho pelo qual a camada é responsável (retira o cabeçalho) e repassa para a camada imediatamente acima.
+Comunicação inter-camadas -> De maneira mais simples, pode-se dizer que uma determinada camada no transmissor comunica-se com a camada correspondente no receptor;
+Um protocolo no transmissor se comunica com o mesmo protocolo no receptor, mas sempre seguindo a ordem descendente(de camadas) na transmissão e ascendente (de camadas) na recepção.
+Modelo OSI é um modelo de referência (não é implementado na prática);
+O modelo OSI surgiu após o TCP/IP estar amplamente implantado nas redes;
+Em comparação ao modelo OSI, o TCP/IP não implementa as camadas de apresentação e sessão! (Os serviços providos por estas camadas, quando necessários, devem ser implementados na aplicação);
+A camada de rede se chama camada Inter-redes;
+E as camadas de enlace e física são uma única camada chamada host-rede;
+Na prática, a pilha de protocolos da internet se baseia no modelo TCP/IP, porém com algumas pequenas diferenças;
+A camada inter-redes chama-se camada Internet;
+E a camada host/rede é separada em camadas de enlace e física;
+
