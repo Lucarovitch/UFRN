@@ -17,9 +17,13 @@ clientSocket.connect((serverName, serverPort)) # conecta o socket ao servidor
 
 sentence = input('Digite o seu nickname: ')
 clientSocket.send(sentence.encode('utf-8')) # envia o texto para o servidor
+usuario = sentence
 while (sentence!='exit'):
 	sentence = input('Digite sua mensagem: ')
 	clientSocket.send(sentence.encode('utf-8'))
-modifiedSentence = clientSocket.recv(1024) # recebe do servidor a resposta
-print ('O servidor (\'%s\', %d) respondeu com: %s' % (serverName, serverPort, modifiedSentence.decode('utf-8')))
+	modifiedSentence = clientSocket.recv(1024) # recebe do servidor a resposta
+	print ('O usuário %s (\'%s\', %d) respondeu com: %s' % (usuario, serverName, serverPort, modifiedSentence.decode('utf-8')))
+
+
+print('Você se desconectou.')
 clientSocket.close() # encerramento o socket do cliente
