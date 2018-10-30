@@ -7,10 +7,13 @@
 #
 
 # importacao das bibliotecas
-from socket import * # sockets
+import socket # sockets
 import threading
 import time
-
+listaconexoes = []
+listaip = []
+listaporta = []
+listanome = []
 class minhaThread (threading.Thread):
     # redefine a funcao __init__ para aceitar a passagem parametros de entrada
     def __init__(self, threadID, threadName, threadCounter):
@@ -19,23 +22,39 @@ class minhaThread (threading.Thread):
         self.name = threadName
         self.counter = threadCounter
     # a funcao run() e executada por padrao por cada thread 
+
+    def sendmessage(self):
+      for i in range(len(listaconexoes)):
+        sentencethread = connectionSocket.recv(1024) # recebe dados do cliente
+        sentencethread = sentencethread.decode('utf-8') 
+        valoratual = listaconexoes[i] 
+        print(listaconexoes)
+        valoratual.send(sentencethread.encode('utf-8'))
+        print('%s enviou a mensagem: %s' %(self.name,sentencethread))
+
     def run(self):
         # aviso de inicio da thread
         print('%s se conectou ao servidor.' % (self.name))
         sentencethread = connectionSocket.recv(1024) # recebe dados do cliente
         sentencethread = sentencethread.decode('utf-8') 
+        if sentencethread == 'exit':
+          connectionSocket.close()
+        elif sentencethread == 'list':
+          print(listanome, listaip)
+          listaconexoes[self.threadID].send(listanome, listaip)
+        else:
+          self.sendmessage()
         #connectionSocket.send(sentencethread.encode('utf-8'))
-        while(sentencethread != 'exit'):
-          sentencethread = connectionSocket.recv(1024) # recebe dados do cliente
-          sentencethread = sentencethread.decode('utf-8')  
-          connectionSocket.send(sentence.encode('utf-8'))
-        connectionSocket.close()
+        #while(sentencethread != 'exit'):
+
+
+    
+        
         #print ('Iniciando Thread %d [%s] com %d tarefas' % (self.id, self.name, self.counter))
         # chama a funcao a ser executada por cada thread
         #executa_tarefa(self.id, self.name, self.counter)
         # aviso de que a thread terminou de executar suas tarefas
-        print ('\nFim da Thread %d [%s]' % (self.id, self.name))
-
+        #print ('%s se desconectou' % (self.name))
 # funcao a ser chamada por cada thread em execucao       
 #def executa_tarefa(id, name, counter):
  #   while counter:
@@ -53,21 +72,28 @@ class minhaThread (threading.Thread):
 #thread2.start()
 
 # definicao das variaveis
+i = 0
 serverName = '' # ip do servidor (em branco)
 serverPort = 12000 # porta a se conectar
-serverSocket = socket(AF_INET,SOCK_STREAM) # criacao do socket TCP
+serverSocket = socket.socket(socket.AF_INET,socket.SOCK_STREAM) # criacao do socket TCP
+serverSocket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR,1)
 serverSocket.bind((serverName,serverPort)) # bind do ip do servidor com a porta
 serverSocket.listen(1) # socket pronto para   'ouvir' conexoes
 print ('Servidor TCP esperando conexoes na porta %d ...' % (serverPort))
 while 1:
   connectionSocket, addr = serverSocket.accept() # aceita as conexoes dos clientes
+  listaconexoes.append(connectionSocket)
+  listaip.append(addr)
+  listaporta.append(serverPort)
   print("Novo usuário conectado")
   #thread.start_new_thread(minhaThread, ())
 
 
-  #sentence = connectionSocket.recv(1024) # recebe dados do cliente
-  #sentence = sentence.decode('utf-8')
-  thread1 = minhaThread (1, sentence, 4)
+  sentence = connectionSocket.recv(1024) # recebe dados do cliente
+  sentence = sentence.decode('utf-8')
+  thread1 = minhaThread (i, sentence, 4)
+  i = i+1
+  listanome.append(sentence)
   #thread2 = minhaThread (2, sentence, 4)
   thread1.start()
   #thread2.start()
