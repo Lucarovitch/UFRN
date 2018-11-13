@@ -82,6 +82,7 @@ serverSocket.listen(1) # socket pronto para   'ouvir' conexoes
 print ('Servidor TCP esperando conexoes na porta %d ...' % (serverPort))
 while 1:
   connectionSocket, addr = serverSocket.accept() # aceita as conexoes dos clientes
+
   listaconexoes.append(connectionSocket)
   listaip.append(addr)
   listaporta.append(serverPort)
@@ -91,7 +92,7 @@ while 1:
 
   sentence = connectionSocket.recv(1024) # recebe dados do cliente
   sentence = sentence.decode('utf-8')
-  thread1 = minhaThread (i, sentence, 4)
+  thread1 = minhaThread(i, sentence, 4)
   i = i+1
   listanome.append(sentence)
   #thread2 = minhaThread (2, sentence, 4)
